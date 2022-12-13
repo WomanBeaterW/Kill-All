@@ -204,7 +204,7 @@ do -- [[ Animations ]] --
 		PlayAnimation(4963373273)
 	end)
 	Animations:MakeButton("Bang", function()
-		PlayAnimation(4963373273)
+		PlayAnimation(4966833843)
 	end)
 	Animations:MakeButton("Lay Down Bang", function()
 		PlayAnimation(4966879039)
