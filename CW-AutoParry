@@ -1,0 +1,59 @@
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local LP = Players.LocalPlayer
+local Sounds = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Slash", "Slash1", "Slash2", "Slash3"}
+
+_G.Distance = 20
+_G.Toggle = false
+_G.Chance = 0.5
+
+local function Notify(title, text, duration)
+    game.StarterGui:SetCore("SendNotification", {
+        Title = title,
+        Text = text,
+        Duration = duration
+    })
+end
+
+Notify("Auto Parry Executed", 8)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent then return end
+
+    if input.KeyCode == Enum.KeyCode.K then
+        _G.Toggle = not _G.Toggle
+        local toggleStatus = _G.Toggle and "On" or "Off"
+        Notify("Auto Parry " .. toggleStatus, toggleStatus, 4)
+    end
+end)
+
+local hitboxNames = {
+    Hitbox = true,
+    Weapon1Hitbox = true,
+    Weapon2Hitbox = true,
+    Weapon3Hitbox = true,
+    RightFistHitbox = true,
+    LeftFistHitbox = true,
+    FullBodyHitbox = true
+}
+
+workspace.PlayerCharacters.DescendantAdded:Connect(function(descendant)
+    if not _G.Toggle or not descendant:IsA("Sound") then return end
+
+    if hitboxNames[descendant.Parent.Name] then
+        for _, soundName in pairs(Sounds) do
+            if descendant.Name == soundName and descendant.Parent.Parent.Parent.Parent.Name ~= LP.Name then
+                local character = LP.Character
+                if character and character:FindFirstChild("HumanoidRootPart") then
+                    local distance = (character.HumanoidRootPart.Position - descendant.Parent.Position).Magnitude
+                    if distance <= _G.Distance and math.random() <= _G.Chance then
+                        keypress(Enum.KeyCode.F)
+                        wait(0.0001)
+                        keyrelease(Enum.KeyCode.F)
+                    end
+                end
+                break
+            end
+        end
+    end
+end)
