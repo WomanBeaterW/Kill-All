@@ -3,9 +3,7 @@ local Players = game:GetService("Players")
 local LP = Players.LocalPlayer
 local Sounds = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Slash", "Slash1", "Slash2", "Slash3"}
 
-_G.Distance = 20
 _G.Toggle = false
-_G.Chance = 0.5
 
 local function Notify(title, text, duration)
     game.StarterGui:SetCore("SendNotification", {
